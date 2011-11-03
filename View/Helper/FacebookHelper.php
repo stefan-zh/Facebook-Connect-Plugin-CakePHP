@@ -109,7 +109,8 @@ class FacebookHelper extends AppHelper {
 			$options['redirect'] = Router::url($options['redirect']);
 			$onclick = "login('".$options['redirect']."');";
 			if($options['img']){
-				return $this->Html->image($options['img'], array(
+				$source = '/Facebook/img/'.$options['img'];
+				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
 				'url' => '#',
 				'onclick' => $onclick));
@@ -159,7 +160,8 @@ class FacebookHelper extends AppHelper {
 				$onclick = 'if(confirm("'.$options['confirm'].'")){'.$onclick.'}';
 			}
 			if($options['img']){
-				return $this->Html->image($options['img'], array(
+				$source = '/Facebook/img/'.$options['img'];
+				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
 				'url' => '#',
 				'onclick' => $onclick));

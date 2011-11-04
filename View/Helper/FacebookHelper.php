@@ -83,6 +83,7 @@ class FacebookHelper extends AppHelper {
 	* - img string: Creates fortmatted image tag. 'img' should be
 		relative to /app/webroot/img/
 	* - alt string: Image caption
+	* - id string: Tag CSS id
 	* - show-faces bool: Show pictures of the user's friends who have joined your application
 	* - width int: The width of the plugin in pixels
 	* - max-rows int: The maximum number of rows of profile pictures to show
@@ -94,11 +95,12 @@ class FacebookHelper extends AppHelper {
 	function login($options = array(), $label = ''){
 		$options = array_merge(
 			array(
-				'label' => 'login',
+				'label' => '',
 				'custom' => false,
 				'redirect' => false,
 				'img' => false,
 				'alt' => '',
+				'id' => '',
 				'show-faces' => true,	// fb button only
 				'width' => 200,			// fb button only
 				'max-rows' => 1			// fb button only
@@ -112,11 +114,13 @@ class FacebookHelper extends AppHelper {
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
+				'id' => $options['id'],
 				'url' => '#',
 				'onclick' => $onclick));
 			}
 			else {
-				return $this->Html->link($options['label'], '#', array('onclick' => $onclick));
+				return $this->Html->link($options['label'], '#', array(
+					'onclick' => $onclick, 'id' => $options['id']));
 			}
 		}
 		else {
@@ -138,6 +142,7 @@ class FacebookHelper extends AppHelper {
 	* - img string: Creates fortmatted image tag. 'img' should be
 		relative to /app/webroot/img/
 	* - alt string: Image caption
+	* - id string: Tag CSS Id
 	* @param string label
 	* @return string XFBML tag for logout button
 	* @access public
@@ -145,11 +150,12 @@ class FacebookHelper extends AppHelper {
 	function logout($options = array(), $label = ''){
 		$options = array_merge(
 			array(
-				'label' => 'logout',
+				'label' => '',
 				'custom' => false,
 				'redirect' => false,
 				'img' => false,
-				'alt' => ''
+				'alt' => '',
+				'id' => ''
 			), 
 			$options
 		);
@@ -163,17 +169,20 @@ class FacebookHelper extends AppHelper {
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
 				'alt' => $options['alt'],
+				'id' => $options['id'],
 				'url' => '#',
 				'onclick' => $onclick));
 			}
 			else {
-				return $this->Html->link($options['label'], '#', array('onclick' => $onclick));
+				return $this->Html->link($options['label'], '#', array(
+					'onclick' => $onclick, 'id' => $options['id']));
 			}
 		} else {
 			$source = '/Facebook/img/facebook-logout.png';
 			return $this->Html->image($source, array(
 				'alt' => 'Facebook logout',
 				'url' => '#',
+				'id' => $options['id'],
 				'onclick' => 'logout();'));
 		}
 	}

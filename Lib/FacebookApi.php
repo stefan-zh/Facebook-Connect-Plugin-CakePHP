@@ -7,7 +7,7 @@
   * @link http://www.webtechnick.com
   * @license MIT
   */
-App::uses('Facebook.Facebook/src/facebook', 'Vendor');
+App::uses('Facebook', 'Facebook.Vendor');
 Configure::load('facebook');
 class FacebookApi {
 
@@ -55,7 +55,7 @@ class FacebookApi {
     */
   public static function buildFacebook(){
     if(!self::$Facebook){
-      self::$Facebook = new Facebook(Configure::read('Facebook.api_key'), Configure::read('Facebook.secret'));
+      self::$Facebook = new Facebook(Configure::read('facebook.api_key'), Configure::read('facebook.secret'));
     }
   }
 }

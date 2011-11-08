@@ -40,7 +40,7 @@ class FacebookInfo {
 			}
 		} else {
 			Configure::load('facebook');
-			return Configure::read('Facebook');
+			return Configure::read('FbConfig');
 		}
 		return null;
   }

@@ -79,15 +79,17 @@ class FacebookHelper extends AppHelper {
 	* - redirect string: to your app's logout url (default null)
 	* - label string: text to use in link (default logout)
 	* - custom boolean: Used to create custom link instead of standart fbml. 
-	    if redirect option is set this one is not required.
+	*   if redirect option is set this one is not required.
 	* - img string: Creates fortmatted image tag. 'img' should be
-		relative to /app/webroot/img/
+	*	relative to /app/webroot/img/
 	* - alt string: Image caption
 	* - id string: Tag CSS id
 	* - show-faces bool: Show pictures of the user's friends who have joined your application
 	* - width int: The width of the plugin in pixels
 	* - max-rows int: The maximum number of rows of profile pictures to show
-	* - perms list: of permissions to ask for when logging in separated by commas (eg: 'email,read_stream,publish_stream'). (http://developers.facebook.com/docs/authentication/permissions)
+	* - perms string: of permissions to ask for when logging in separated by commas 
+	*	(eg: 'email,read_stream,publish_stream'). 
+	*	(http://developers.facebook.com/docs/authentication/permissions)
 	* @param string label
 	* @return string XFBML tag
 	* @access public
@@ -103,13 +105,14 @@ class FacebookHelper extends AppHelper {
 				'id' => '',
 				'show-faces' => true,	// fb button only
 				'width' => 200,			// fb button only
-				'max-rows' => 1			// fb button only
+				'max-rows' => 1,		// fb button only
+				'perms' => ''
 			),
 			$options
 		);
 		if((isset($options['redirect']) && $options['redirect']) || $options['custom']){
 			$options['redirect'] = Router::url($options['redirect']);
-			$onclick = "login('".$options['redirect']."');";
+			$onclick = "login('".$options['redirect']."', '".$options['perms']."');";
 			if($options['img']){
 				$source = '/Facebook/img/'.$options['img'];
 				return $this->Html->image($source, array(
@@ -120,7 +123,7 @@ class FacebookHelper extends AppHelper {
 			}
 			else {
 				return $this->Html->link($options['label'], '#', array(
-					'onclick' => $onclick, 'id' => $options['id']));
+					'onclick' => $onclick, 'id' => $options['id'], 'perms' => $options['perms']));
 			}
 		}
 		else {
@@ -492,7 +495,7 @@ class FacebookHelper extends AppHelper {
 	};
 
 	// logs the user in the application and facebook
-	function login(redirection){
+	function login(redirection, perms){
 		FB.login(function (response) {
 			if(response.authResponse) {
 				// user is logged in
@@ -504,7 +507,7 @@ class FacebookHelper extends AppHelper {
 				// user could not log in
 				console.log('User cancelled login or did not fully authorize.');
 			}
-		}, {scope: 'email'});
+		}, {scope: perms});
 	}
 
 	// logs the user out of the application and facebook
